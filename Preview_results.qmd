@@ -930,7 +930,15 @@ gjr_etf_fit <- ugarchfit(
 gjr_etf_fit
 ```
 
-Obesrevations: - ETF variance dummy remains insignificant - The asymmetry coefficient γ is also insignificant - Volatility persistence remains high - ETF dummy provides almost no improvement in fit
+Obesrevations:
+
+-   ETF variance dummy remains insignificant
+
+-   The asymmetry coefficient γ is also insignificant
+
+-   Volatility persistence remains high
+
+-   ETF dummy provides almost no improvement in fit
 
 ### Pre/Post Garch
 
@@ -963,7 +971,17 @@ gjr_pre_fit
 gjr_post_fit
 ```
 
-Observations: - Estimated volatility persistence falls materially -\> 0.995 pre-ETF vs. 0.914 post-ETF - The asymmetry coefficient γ is insignificant in both periods - Pre-ETF: GJR substantially improves parameter stability relative to the symmetric GARCH - Post-ETF: No residual autocorrelation, no significant sign bias, stable parameters, and strong goodness-of-fit - Post-ETF volatility process appears less persistent and more stable
+Observations:
+
+-   Estimated volatility persistence falls materially -\> 0.995 pre-ETF vs. 0.914 post-ETF
+
+-   The asymmetry coefficient γ is insignificant in both periods
+
+-   Pre-ETF: GJR substantially improves parameter stability relative to the symmetric GARCH
+
+-   Post-ETF: No residual autocorrelation, no significant sign bias, stable parameters, and strong goodness-of-fit
+
+-   Post-ETF volatility process appears less persistent and more stable
 
 ### LR Test
 
@@ -1072,8 +1090,10 @@ ms_summary <- ms_data |>
 ms_summary
 ```
 
-The full post-FTX sample suggests greater high-volatility regime occupancy after ETF approval.
-However due to the unbalanced observation I rerun below to review using balanced pre ETF and Post ETF data.
+Observations:
+
+-   The full post-FTX sample suggests greater high-volatility regime occupancy after ETF approval.
+    However due to the unbalanced observation I rerun below to review using balanced pre ETF and Post ETF data.
 
 Balanced dates:
 

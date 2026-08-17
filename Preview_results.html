@@ -3656,7 +3656,7 @@ Adjusted Pearson Goodness-of-Fit Test:
 4    50     61.73      0.10467
 
 
-Elapsed time : 0.1242681 </code></pre>
+Elapsed time : 0.1090288 </code></pre>
 </div>
 </div>
 <p>Persistance:</p>
@@ -3809,7 +3809,7 @@ Adjusted Pearson Goodness-of-Fit Test:
 4    50     66.59      0.04786
 
 
-Elapsed time : 0.1824751 </code></pre>
+Elapsed time : 0.1655381 </code></pre>
 </div>
 </div>
 <p>Observations:</p>
@@ -3947,7 +3947,7 @@ Adjusted Pearson Goodness-of-Fit Test:
 4    50     72.29     0.016858
 
 
-Elapsed time : 0.06592512 </code></pre>
+Elapsed time : 0.050143 </code></pre>
 </div>
 </div>
 <p>Post ETF results:</p>
@@ -4051,7 +4051,7 @@ Adjusted Pearson Goodness-of-Fit Test:
 4    50     36.06       0.9155
 
 
-Elapsed time : 0.09198689 </code></pre>
+Elapsed time : 0.08626914 </code></pre>
 </div>
 </div>
 <p>Observations:</p>
@@ -4188,7 +4188,7 @@ Adjusted Pearson Goodness-of-Fit Test:
 4    50     64.97      0.06284
 
 
-Elapsed time : 0.3351381 </code></pre>
+Elapsed time : 0.2768362 </code></pre>
 </div>
 </div>
 <p>Observations:</p>
@@ -4327,10 +4327,16 @@ Adjusted Pearson Goodness-of-Fit Test:
 4    50     53.63      0.30116
 
 
-Elapsed time : 0.30036 </code></pre>
+Elapsed time : 0.2858078 </code></pre>
 </div>
 </div>
-<p>Obesrevations: - ETF variance dummy remains insignificant - The asymmetry coefficient γ is also insignificant - Volatility persistence remains high - ETF dummy provides almost no improvement in fit</p>
+<p>Obesrevations:</p>
+<ul>
+<li><p>ETF variance dummy remains insignificant</p></li>
+<li><p>The asymmetry coefficient γ is also insignificant</p></li>
+<li><p>Volatility persistence remains high</p></li>
+<li><p>ETF dummy provides almost no improvement in fit</p></li>
+</ul>
 </section>
 <section id="prepost-garch-1" class="level3" data-number="10.2.3">
 <h3 data-number="10.2.3" class="anchored" data-anchor-id="prepost-garch-1"><span class="header-section-number">10.2.3</span> Pre/Post Garch</h3>
@@ -4461,7 +4467,7 @@ Adjusted Pearson Goodness-of-Fit Test:
 4    50     72.29     0.016858
 
 
-Elapsed time : 0.221555 </code></pre>
+Elapsed time : 0.1678829 </code></pre>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
@@ -4565,10 +4571,17 @@ Adjusted Pearson Goodness-of-Fit Test:
 4    50     35.59       0.9242
 
 
-Elapsed time : 0.288079 </code></pre>
+Elapsed time : 0.2204142 </code></pre>
 </div>
 </div>
-<p>Observations: - Estimated volatility persistence falls materially -&gt; 0.995 pre-ETF vs. 0.914 post-ETF - The asymmetry coefficient γ is insignificant in both periods - Pre-ETF: GJR substantially improves parameter stability relative to the symmetric GARCH - Post-ETF: No residual autocorrelation, no significant sign bias, stable parameters, and strong goodness-of-fit - Post-ETF volatility process appears less persistent and more stable</p>
+<p>Observations:</p>
+<ul>
+<li><p>Estimated volatility persistence falls materially -&gt; 0.995 pre-ETF vs. 0.914 post-ETF</p></li>
+<li><p>The asymmetry coefficient γ is insignificant in both periods</p></li>
+<li><p>Pre-ETF: GJR substantially improves parameter stability relative to the symmetric GARCH</p></li>
+<li><p>Post-ETF: No residual autocorrelation, no significant sign bias, stable parameters, and strong goodness-of-fit</p></li>
+<li><p>Post-ETF volatility process appears less persistent and more stable</p></li>
+</ul>
 </section>
 <section id="lr-test" class="level3" data-number="10.2.4">
 <h3 data-number="10.2.4" class="anchored" data-anchor-id="lr-test"><span class="header-section-number">10.2.4</span> LR Test</h3>
@@ -4745,7 +4758,10 @@ Regime 2 0.2177755 0.657445</code></pre>
 2 Pre_ETF    425            0.343         0.233</code></pre>
 </div>
 </div>
-<p>The full post-FTX sample suggests greater high-volatility regime occupancy after ETF approval. However due to the unbalanced observation I rerun below to review using balanced pre ETF and Post ETF data.</p>
+<p>Observations:</p>
+<ul>
+<li>The full post-FTX sample suggests greater high-volatility regime occupancy after ETF approval. However due to the unbalanced observation I rerun below to review using balanced pre ETF and Post ETF data.</li>
+</ul>
 <p>Balanced dates:</p>
 <div class="cell">
 <details class="code-fold">
@@ -6165,178 +6181,198 @@ Regime 2 0.2177755 0.657445</code></pre>
 <span id="cb97-1026"><a href="#cb97-1026" aria-hidden="true" tabindex="-1"></a>gjr_etf_fit</span>
 <span id="cb97-1027"><a href="#cb97-1027" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb97-1028"><a href="#cb97-1028" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-1029"><a href="#cb97-1029" aria-hidden="true" tabindex="-1"></a>Obesrevations: - ETF variance dummy remains insignificant - The asymmetry coefficient γ is also insignificant - Volatility persistence remains high - ETF dummy provides almost no improvement in fit</span>
+<span id="cb97-1029"><a href="#cb97-1029" aria-hidden="true" tabindex="-1"></a>Obesrevations:</span>
 <span id="cb97-1030"><a href="#cb97-1030" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-1031"><a href="#cb97-1031" aria-hidden="true" tabindex="-1"></a><span class="fu">### Pre/Post Garch</span></span>
+<span id="cb97-1031"><a href="#cb97-1031" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>ETF variance dummy remains insignificant</span>
 <span id="cb97-1032"><a href="#cb97-1032" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-1035"><a href="#cb97-1035" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb97-1036"><a href="#cb97-1036" aria-hidden="true" tabindex="-1"></a>gjr_spec <span class="ot">&lt;-</span> <span class="fu">ugarchspec</span>(</span>
-<span id="cb97-1037"><a href="#cb97-1037" aria-hidden="true" tabindex="-1"></a>  <span class="at">variance.model =</span> <span class="fu">list</span>(</span>
-<span id="cb97-1038"><a href="#cb97-1038" aria-hidden="true" tabindex="-1"></a>    <span class="at">model =</span> <span class="st">&quot;gjrGARCH&quot;</span>,</span>
-<span id="cb97-1039"><a href="#cb97-1039" aria-hidden="true" tabindex="-1"></a>    <span class="at">garchOrder =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>)</span>
-<span id="cb97-1040"><a href="#cb97-1040" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb97-1041"><a href="#cb97-1041" aria-hidden="true" tabindex="-1"></a>  <span class="at">mean.model =</span> <span class="fu">list</span>(</span>
-<span id="cb97-1042"><a href="#cb97-1042" aria-hidden="true" tabindex="-1"></a>    <span class="at">armaOrder =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),</span>
-<span id="cb97-1043"><a href="#cb97-1043" aria-hidden="true" tabindex="-1"></a>    <span class="at">include.mean =</span> <span class="cn">TRUE</span></span>
-<span id="cb97-1044"><a href="#cb97-1044" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb97-1045"><a href="#cb97-1045" aria-hidden="true" tabindex="-1"></a>  <span class="at">distribution.model =</span> <span class="st">&quot;std&quot;</span></span>
-<span id="cb97-1046"><a href="#cb97-1046" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb97-1047"><a href="#cb97-1047" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-1048"><a href="#cb97-1048" aria-hidden="true" tabindex="-1"></a>gjr_pre_fit <span class="ot">&lt;-</span> <span class="fu">ugarchfit</span>(</span>
-<span id="cb97-1049"><a href="#cb97-1049" aria-hidden="true" tabindex="-1"></a>  <span class="at">spec =</span> gjr_spec,</span>
-<span id="cb97-1050"><a href="#cb97-1050" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> garch_pre<span class="sc">$</span>log_return,</span>
-<span id="cb97-1051"><a href="#cb97-1051" aria-hidden="true" tabindex="-1"></a>  <span class="at">solver =</span> <span class="st">&quot;hybrid&quot;</span></span>
-<span id="cb97-1052"><a href="#cb97-1052" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb97-1053"><a href="#cb97-1053" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-1054"><a href="#cb97-1054" aria-hidden="true" tabindex="-1"></a>gjr_post_fit <span class="ot">&lt;-</span> <span class="fu">ugarchfit</span>(</span>
-<span id="cb97-1055"><a href="#cb97-1055" aria-hidden="true" tabindex="-1"></a>  <span class="at">spec =</span> gjr_spec,</span>
-<span id="cb97-1056"><a href="#cb97-1056" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> garch_post<span class="sc">$</span>log_return,</span>
-<span id="cb97-1057"><a href="#cb97-1057" aria-hidden="true" tabindex="-1"></a>  <span class="at">solver =</span> <span class="st">&quot;hybrid&quot;</span></span>
-<span id="cb97-1058"><a href="#cb97-1058" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb97-1059"><a href="#cb97-1059" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-1060"><a href="#cb97-1060" aria-hidden="true" tabindex="-1"></a>gjr_pre_fit</span>
-<span id="cb97-1061"><a href="#cb97-1061" aria-hidden="true" tabindex="-1"></a>gjr_post_fit</span>
-<span id="cb97-1062"><a href="#cb97-1062" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb97-1063"><a href="#cb97-1063" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-1064"><a href="#cb97-1064" aria-hidden="true" tabindex="-1"></a>Observations: - Estimated volatility persistence falls materially -<span class="sc">\&gt;</span> 0.995 pre-ETF vs. 0.914 post-ETF - The asymmetry coefficient γ is insignificant in both periods - Pre-ETF: GJR substantially improves parameter stability relative to the symmetric GARCH - Post-ETF: No residual autocorrelation, no significant sign bias, stable parameters, and strong goodness-of-fit - Post-ETF volatility process appears less persistent and more stable</span>
-<span id="cb97-1065"><a href="#cb97-1065" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-1066"><a href="#cb97-1066" aria-hidden="true" tabindex="-1"></a><span class="fu">### LR Test</span></span>
+<span id="cb97-1033"><a href="#cb97-1033" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>The asymmetry coefficient γ is also insignificant</span>
+<span id="cb97-1034"><a href="#cb97-1034" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-1035"><a href="#cb97-1035" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Volatility persistence remains high</span>
+<span id="cb97-1036"><a href="#cb97-1036" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-1037"><a href="#cb97-1037" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>ETF dummy provides almost no improvement in fit</span>
+<span id="cb97-1038"><a href="#cb97-1038" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-1039"><a href="#cb97-1039" aria-hidden="true" tabindex="-1"></a><span class="fu">### Pre/Post Garch</span></span>
+<span id="cb97-1040"><a href="#cb97-1040" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-1043"><a href="#cb97-1043" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb97-1044"><a href="#cb97-1044" aria-hidden="true" tabindex="-1"></a>gjr_spec <span class="ot">&lt;-</span> <span class="fu">ugarchspec</span>(</span>
+<span id="cb97-1045"><a href="#cb97-1045" aria-hidden="true" tabindex="-1"></a>  <span class="at">variance.model =</span> <span class="fu">list</span>(</span>
+<span id="cb97-1046"><a href="#cb97-1046" aria-hidden="true" tabindex="-1"></a>    <span class="at">model =</span> <span class="st">&quot;gjrGARCH&quot;</span>,</span>
+<span id="cb97-1047"><a href="#cb97-1047" aria-hidden="true" tabindex="-1"></a>    <span class="at">garchOrder =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb97-1048"><a href="#cb97-1048" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb97-1049"><a href="#cb97-1049" aria-hidden="true" tabindex="-1"></a>  <span class="at">mean.model =</span> <span class="fu">list</span>(</span>
+<span id="cb97-1050"><a href="#cb97-1050" aria-hidden="true" tabindex="-1"></a>    <span class="at">armaOrder =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb97-1051"><a href="#cb97-1051" aria-hidden="true" tabindex="-1"></a>    <span class="at">include.mean =</span> <span class="cn">TRUE</span></span>
+<span id="cb97-1052"><a href="#cb97-1052" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb97-1053"><a href="#cb97-1053" aria-hidden="true" tabindex="-1"></a>  <span class="at">distribution.model =</span> <span class="st">&quot;std&quot;</span></span>
+<span id="cb97-1054"><a href="#cb97-1054" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb97-1055"><a href="#cb97-1055" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-1056"><a href="#cb97-1056" aria-hidden="true" tabindex="-1"></a>gjr_pre_fit <span class="ot">&lt;-</span> <span class="fu">ugarchfit</span>(</span>
+<span id="cb97-1057"><a href="#cb97-1057" aria-hidden="true" tabindex="-1"></a>  <span class="at">spec =</span> gjr_spec,</span>
+<span id="cb97-1058"><a href="#cb97-1058" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> garch_pre<span class="sc">$</span>log_return,</span>
+<span id="cb97-1059"><a href="#cb97-1059" aria-hidden="true" tabindex="-1"></a>  <span class="at">solver =</span> <span class="st">&quot;hybrid&quot;</span></span>
+<span id="cb97-1060"><a href="#cb97-1060" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb97-1061"><a href="#cb97-1061" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-1062"><a href="#cb97-1062" aria-hidden="true" tabindex="-1"></a>gjr_post_fit <span class="ot">&lt;-</span> <span class="fu">ugarchfit</span>(</span>
+<span id="cb97-1063"><a href="#cb97-1063" aria-hidden="true" tabindex="-1"></a>  <span class="at">spec =</span> gjr_spec,</span>
+<span id="cb97-1064"><a href="#cb97-1064" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> garch_post<span class="sc">$</span>log_return,</span>
+<span id="cb97-1065"><a href="#cb97-1065" aria-hidden="true" tabindex="-1"></a>  <span class="at">solver =</span> <span class="st">&quot;hybrid&quot;</span></span>
+<span id="cb97-1066"><a href="#cb97-1066" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb97-1067"><a href="#cb97-1067" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-1068"><a href="#cb97-1068" aria-hidden="true" tabindex="-1"></a>Pre and post have the same number of rows, so they are reunited for the LR test.</span>
-<span id="cb97-1069"><a href="#cb97-1069" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-1072"><a href="#cb97-1072" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb97-1073"><a href="#cb97-1073" aria-hidden="true" tabindex="-1"></a>garch_balanced <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
-<span id="cb97-1074"><a href="#cb97-1074" aria-hidden="true" tabindex="-1"></a>  garch_pre,</span>
-<span id="cb97-1075"><a href="#cb97-1075" aria-hidden="true" tabindex="-1"></a>  garch_post</span>
-<span id="cb97-1076"><a href="#cb97-1076" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb97-1077"><a href="#cb97-1077" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Date)</span>
-<span id="cb97-1078"><a href="#cb97-1078" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-1079"><a href="#cb97-1079" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(garch_balanced)</span>
-<span id="cb97-1080"><a href="#cb97-1080" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(garch_pre) <span class="sc">+</span> <span class="fu">nrow</span>(garch_post)</span>
+<span id="cb97-1068"><a href="#cb97-1068" aria-hidden="true" tabindex="-1"></a>gjr_pre_fit</span>
+<span id="cb97-1069"><a href="#cb97-1069" aria-hidden="true" tabindex="-1"></a>gjr_post_fit</span>
+<span id="cb97-1070"><a href="#cb97-1070" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb97-1071"><a href="#cb97-1071" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-1072"><a href="#cb97-1072" aria-hidden="true" tabindex="-1"></a>Observations:</span>
+<span id="cb97-1073"><a href="#cb97-1073" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-1074"><a href="#cb97-1074" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Estimated volatility persistence falls materially -<span class="sc">\&gt;</span> 0.995 pre-ETF vs. 0.914 post-ETF</span>
+<span id="cb97-1075"><a href="#cb97-1075" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-1076"><a href="#cb97-1076" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>The asymmetry coefficient γ is insignificant in both periods</span>
+<span id="cb97-1077"><a href="#cb97-1077" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-1078"><a href="#cb97-1078" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Pre-ETF: GJR substantially improves parameter stability relative to the symmetric GARCH</span>
+<span id="cb97-1079"><a href="#cb97-1079" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-1080"><a href="#cb97-1080" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Post-ETF: No residual autocorrelation, no significant sign bias, stable parameters, and strong goodness-of-fit</span>
 <span id="cb97-1081"><a href="#cb97-1081" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-1082"><a href="#cb97-1082" aria-hidden="true" tabindex="-1"></a>gjr_pooled_bal_fit <span class="ot">&lt;-</span> <span class="fu">ugarchfit</span>(</span>
-<span id="cb97-1083"><a href="#cb97-1083" aria-hidden="true" tabindex="-1"></a>  <span class="at">spec =</span> gjr_spec,</span>
-<span id="cb97-1084"><a href="#cb97-1084" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> garch_balanced<span class="sc">$</span>log_return,</span>
-<span id="cb97-1085"><a href="#cb97-1085" aria-hidden="true" tabindex="-1"></a>  <span class="at">solver =</span> <span class="st">&quot;hybrid&quot;</span></span>
-<span id="cb97-1086"><a href="#cb97-1086" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb97-1082"><a href="#cb97-1082" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Post-ETF volatility process appears less persistent and more stable</span>
+<span id="cb97-1083"><a href="#cb97-1083" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-1084"><a href="#cb97-1084" aria-hidden="true" tabindex="-1"></a><span class="fu">### LR Test</span></span>
+<span id="cb97-1085"><a href="#cb97-1085" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-1086"><a href="#cb97-1086" aria-hidden="true" tabindex="-1"></a>Pre and post have the same number of rows, so they are reunited for the LR test.</span>
 <span id="cb97-1087"><a href="#cb97-1087" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-1088"><a href="#cb97-1088" aria-hidden="true" tabindex="-1"></a>ll_pooled <span class="ot">&lt;-</span> <span class="fu">likelihood</span>(gjr_pooled_bal_fit)</span>
-<span id="cb97-1089"><a href="#cb97-1089" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-1090"><a href="#cb97-1090" aria-hidden="true" tabindex="-1"></a>ll_separate <span class="ot">&lt;-</span></span>
-<span id="cb97-1091"><a href="#cb97-1091" aria-hidden="true" tabindex="-1"></a>  <span class="fu">likelihood</span>(gjr_pre_fit) <span class="sc">+</span></span>
-<span id="cb97-1092"><a href="#cb97-1092" aria-hidden="true" tabindex="-1"></a>  <span class="fu">likelihood</span>(gjr_post_fit)</span>
-<span id="cb97-1093"><a href="#cb97-1093" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-1094"><a href="#cb97-1094" aria-hidden="true" tabindex="-1"></a>LR <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> (ll_separate <span class="sc">-</span> ll_pooled)</span>
-<span id="cb97-1095"><a href="#cb97-1095" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-1096"><a href="#cb97-1096" aria-hidden="true" tabindex="-1"></a>LR</span>
-<span id="cb97-1097"><a href="#cb97-1097" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-1098"><a href="#cb97-1098" aria-hidden="true" tabindex="-1"></a>p_LR <span class="ot">&lt;-</span> <span class="fu">pchisq</span>(</span>
-<span id="cb97-1099"><a href="#cb97-1099" aria-hidden="true" tabindex="-1"></a>  LR,</span>
-<span id="cb97-1100"><a href="#cb97-1100" aria-hidden="true" tabindex="-1"></a>  <span class="at">df =</span> <span class="dv">6</span>,</span>
-<span id="cb97-1101"><a href="#cb97-1101" aria-hidden="true" tabindex="-1"></a>  <span class="at">lower.tail =</span> <span class="cn">FALSE</span></span>
-<span id="cb97-1102"><a href="#cb97-1102" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb97-1103"><a href="#cb97-1103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-1104"><a href="#cb97-1104" aria-hidden="true" tabindex="-1"></a>p_LR</span>
-<span id="cb97-1105"><a href="#cb97-1105" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb97-1106"><a href="#cb97-1106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-1107"><a href="#cb97-1107" aria-hidden="true" tabindex="-1"></a>Observation:</span>
-<span id="cb97-1108"><a href="#cb97-1108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-1109"><a href="#cb97-1109" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>LR statistic = 17.17, with p = 0.0087.</span>
-<span id="cb97-1110"><a href="#cb97-1110" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Null Hypothesis is rejected: the overall conditional-volatility process differs significantly across the two periods.</span>
+<span id="cb97-1090"><a href="#cb97-1090" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb97-1091"><a href="#cb97-1091" aria-hidden="true" tabindex="-1"></a>garch_balanced <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb97-1092"><a href="#cb97-1092" aria-hidden="true" tabindex="-1"></a>  garch_pre,</span>
+<span id="cb97-1093"><a href="#cb97-1093" aria-hidden="true" tabindex="-1"></a>  garch_post</span>
+<span id="cb97-1094"><a href="#cb97-1094" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb97-1095"><a href="#cb97-1095" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Date)</span>
+<span id="cb97-1096"><a href="#cb97-1096" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-1097"><a href="#cb97-1097" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(garch_balanced)</span>
+<span id="cb97-1098"><a href="#cb97-1098" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(garch_pre) <span class="sc">+</span> <span class="fu">nrow</span>(garch_post)</span>
+<span id="cb97-1099"><a href="#cb97-1099" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-1100"><a href="#cb97-1100" aria-hidden="true" tabindex="-1"></a>gjr_pooled_bal_fit <span class="ot">&lt;-</span> <span class="fu">ugarchfit</span>(</span>
+<span id="cb97-1101"><a href="#cb97-1101" aria-hidden="true" tabindex="-1"></a>  <span class="at">spec =</span> gjr_spec,</span>
+<span id="cb97-1102"><a href="#cb97-1102" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> garch_balanced<span class="sc">$</span>log_return,</span>
+<span id="cb97-1103"><a href="#cb97-1103" aria-hidden="true" tabindex="-1"></a>  <span class="at">solver =</span> <span class="st">&quot;hybrid&quot;</span></span>
+<span id="cb97-1104"><a href="#cb97-1104" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb97-1105"><a href="#cb97-1105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-1106"><a href="#cb97-1106" aria-hidden="true" tabindex="-1"></a>ll_pooled <span class="ot">&lt;-</span> <span class="fu">likelihood</span>(gjr_pooled_bal_fit)</span>
+<span id="cb97-1107"><a href="#cb97-1107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-1108"><a href="#cb97-1108" aria-hidden="true" tabindex="-1"></a>ll_separate <span class="ot">&lt;-</span></span>
+<span id="cb97-1109"><a href="#cb97-1109" aria-hidden="true" tabindex="-1"></a>  <span class="fu">likelihood</span>(gjr_pre_fit) <span class="sc">+</span></span>
+<span id="cb97-1110"><a href="#cb97-1110" aria-hidden="true" tabindex="-1"></a>  <span class="fu">likelihood</span>(gjr_post_fit)</span>
 <span id="cb97-1111"><a href="#cb97-1111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-1112"><a href="#cb97-1112" aria-hidden="true" tabindex="-1"></a><span class="fu"># Markov-switching mean/variance model</span></span>
+<span id="cb97-1112"><a href="#cb97-1112" aria-hidden="true" tabindex="-1"></a>LR <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> (ll_separate <span class="sc">-</span> ll_pooled)</span>
 <span id="cb97-1113"><a href="#cb97-1113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-1114"><a href="#cb97-1114" aria-hidden="true" tabindex="-1"></a>The Markov-switching model is used as an alternative way to capture changes in Bitcoin volatility without imposing a fixed structural break date.</span>
-<span id="cb97-1115"><a href="#cb97-1115" aria-hidden="true" tabindex="-1"></a>I use a simple two-state specification in which only the conditional mean and variance are allowed to switch across regimes</span>
-<span id="cb97-1116"><a href="#cb97-1116" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-1117"><a href="#cb97-1117" aria-hidden="true" tabindex="-1"></a>Model Estimation:</span>
-<span id="cb97-1118"><a href="#cb97-1118" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-1121"><a href="#cb97-1121" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb97-1122"><a href="#cb97-1122" aria-hidden="true" tabindex="-1"></a>ms_base <span class="ot">&lt;-</span> <span class="fu">lm</span>(</span>
-<span id="cb97-1123"><a href="#cb97-1123" aria-hidden="true" tabindex="-1"></a>  log_return <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb97-1124"><a href="#cb97-1124" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> garch_data_post2022</span>
-<span id="cb97-1125"><a href="#cb97-1125" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb97-1114"><a href="#cb97-1114" aria-hidden="true" tabindex="-1"></a>LR</span>
+<span id="cb97-1115"><a href="#cb97-1115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-1116"><a href="#cb97-1116" aria-hidden="true" tabindex="-1"></a>p_LR <span class="ot">&lt;-</span> <span class="fu">pchisq</span>(</span>
+<span id="cb97-1117"><a href="#cb97-1117" aria-hidden="true" tabindex="-1"></a>  LR,</span>
+<span id="cb97-1118"><a href="#cb97-1118" aria-hidden="true" tabindex="-1"></a>  <span class="at">df =</span> <span class="dv">6</span>,</span>
+<span id="cb97-1119"><a href="#cb97-1119" aria-hidden="true" tabindex="-1"></a>  <span class="at">lower.tail =</span> <span class="cn">FALSE</span></span>
+<span id="cb97-1120"><a href="#cb97-1120" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb97-1121"><a href="#cb97-1121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-1122"><a href="#cb97-1122" aria-hidden="true" tabindex="-1"></a>p_LR</span>
+<span id="cb97-1123"><a href="#cb97-1123" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb97-1124"><a href="#cb97-1124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-1125"><a href="#cb97-1125" aria-hidden="true" tabindex="-1"></a>Observation:</span>
 <span id="cb97-1126"><a href="#cb97-1126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-1127"><a href="#cb97-1127" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb97-1128"><a href="#cb97-1128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-1129"><a href="#cb97-1129" aria-hidden="true" tabindex="-1"></a>ms_fit <span class="ot">&lt;-</span> <span class="fu">msmFit</span>(</span>
-<span id="cb97-1130"><a href="#cb97-1130" aria-hidden="true" tabindex="-1"></a>  ms_base,</span>
-<span id="cb97-1131"><a href="#cb97-1131" aria-hidden="true" tabindex="-1"></a>  <span class="at">k =</span> <span class="dv">2</span>,</span>
-<span id="cb97-1132"><a href="#cb97-1132" aria-hidden="true" tabindex="-1"></a>  <span class="at">p =</span> <span class="dv">0</span>,</span>
-<span id="cb97-1133"><a href="#cb97-1133" aria-hidden="true" tabindex="-1"></a>  <span class="at">sw =</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">TRUE</span>),</span>
-<span id="cb97-1134"><a href="#cb97-1134" aria-hidden="true" tabindex="-1"></a>  <span class="at">control =</span> <span class="fu">list</span>(</span>
-<span id="cb97-1135"><a href="#cb97-1135" aria-hidden="true" tabindex="-1"></a>    <span class="at">parallel =</span> <span class="cn">FALSE</span></span>
-<span id="cb97-1136"><a href="#cb97-1136" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb97-1137"><a href="#cb97-1137" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb97-1138"><a href="#cb97-1138" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-1139"><a href="#cb97-1139" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ms_fit)</span>
-<span id="cb97-1140"><a href="#cb97-1140" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb97-1141"><a href="#cb97-1141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-1142"><a href="#cb97-1142" aria-hidden="true" tabindex="-1"></a>Observations:</span>
-<span id="cb97-1143"><a href="#cb97-1143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-1144"><a href="#cb97-1144" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Identifies a low-volatility and a high-volatility regime</span>
-<span id="cb97-1145"><a href="#cb97-1145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-1146"><a href="#cb97-1146" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Differences are driven mainly by volatility rather than mean returns.</span>
-<span id="cb97-1147"><a href="#cb97-1147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-1148"><a href="#cb97-1148" aria-hidden="true" tabindex="-1"></a>Regime occupancy (Using full post 2022 data) :</span>
-<span id="cb97-1149"><a href="#cb97-1149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-1152"><a href="#cb97-1152" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb97-1153"><a href="#cb97-1153" aria-hidden="true" tabindex="-1"></a>high_state <span class="ot">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb97-1154"><a href="#cb97-1154" aria-hidden="true" tabindex="-1"></a>smooth_prob <span class="ot">&lt;-</span> ms_fit<span class="sc">@</span>Fit<span class="sc">@</span>smoProb[<span class="sc">-</span><span class="dv">1</span>, , drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
-<span id="cb97-1155"><a href="#cb97-1155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-1156"><a href="#cb97-1156" aria-hidden="true" tabindex="-1"></a>ms_data <span class="ot">&lt;-</span> garch_data_post2022 <span class="sc">|&gt;</span></span>
-<span id="cb97-1157"><a href="#cb97-1157" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb97-1158"><a href="#cb97-1158" aria-hidden="true" tabindex="-1"></a>    <span class="at">Prob_HighVol =</span> smooth_prob[, <span class="dv">2</span>]</span>
-<span id="cb97-1159"><a href="#cb97-1159" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb97-1160"><a href="#cb97-1160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-1161"><a href="#cb97-1161" aria-hidden="true" tabindex="-1"></a>ms_summary <span class="ot">&lt;-</span> ms_data <span class="sc">|&gt;</span></span>
-<span id="cb97-1162"><a href="#cb97-1162" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb97-1163"><a href="#cb97-1163" aria-hidden="true" tabindex="-1"></a>    <span class="at">Period =</span> <span class="fu">if_else</span>(</span>
-<span id="cb97-1164"><a href="#cb97-1164" aria-hidden="true" tabindex="-1"></a>      Date <span class="sc">&lt;</span> <span class="fu">as.Date</span>(<span class="st">&quot;2024-01-11&quot;</span>),</span>
-<span id="cb97-1165"><a href="#cb97-1165" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;Pre_ETF&quot;</span>,</span>
-<span id="cb97-1166"><a href="#cb97-1166" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;Post_ETF&quot;</span></span>
-<span id="cb97-1167"><a href="#cb97-1167" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb97-1168"><a href="#cb97-1168" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb97-1169"><a href="#cb97-1169" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Period) <span class="sc">|&gt;</span></span>
-<span id="cb97-1170"><a href="#cb97-1170" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb97-1171"><a href="#cb97-1171" aria-hidden="true" tabindex="-1"></a>    <span class="at">N =</span> <span class="fu">n</span>(),</span>
-<span id="cb97-1172"><a href="#cb97-1172" aria-hidden="true" tabindex="-1"></a>    <span class="at">Avg_HighVol_Prob =</span> <span class="fu">mean</span>(Prob_HighVol),</span>
-<span id="cb97-1173"><a href="#cb97-1173" aria-hidden="true" tabindex="-1"></a>    <span class="at">HighVol_Share =</span> <span class="fu">mean</span>(Prob_HighVol <span class="sc">&gt;</span> <span class="fl">0.5</span>)</span>
-<span id="cb97-1174"><a href="#cb97-1174" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb97-1175"><a href="#cb97-1175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-1176"><a href="#cb97-1176" aria-hidden="true" tabindex="-1"></a>ms_summary</span>
-<span id="cb97-1177"><a href="#cb97-1177" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb97-1127"><a href="#cb97-1127" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>LR statistic = 17.17, with p = 0.0087.</span>
+<span id="cb97-1128"><a href="#cb97-1128" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Null Hypothesis is rejected: the overall conditional-volatility process differs significantly across the two periods.</span>
+<span id="cb97-1129"><a href="#cb97-1129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-1130"><a href="#cb97-1130" aria-hidden="true" tabindex="-1"></a><span class="fu"># Markov-switching mean/variance model</span></span>
+<span id="cb97-1131"><a href="#cb97-1131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-1132"><a href="#cb97-1132" aria-hidden="true" tabindex="-1"></a>The Markov-switching model is used as an alternative way to capture changes in Bitcoin volatility without imposing a fixed structural break date.</span>
+<span id="cb97-1133"><a href="#cb97-1133" aria-hidden="true" tabindex="-1"></a>I use a simple two-state specification in which only the conditional mean and variance are allowed to switch across regimes</span>
+<span id="cb97-1134"><a href="#cb97-1134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-1135"><a href="#cb97-1135" aria-hidden="true" tabindex="-1"></a>Model Estimation:</span>
+<span id="cb97-1136"><a href="#cb97-1136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-1139"><a href="#cb97-1139" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb97-1140"><a href="#cb97-1140" aria-hidden="true" tabindex="-1"></a>ms_base <span class="ot">&lt;-</span> <span class="fu">lm</span>(</span>
+<span id="cb97-1141"><a href="#cb97-1141" aria-hidden="true" tabindex="-1"></a>  log_return <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb97-1142"><a href="#cb97-1142" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> garch_data_post2022</span>
+<span id="cb97-1143"><a href="#cb97-1143" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb97-1144"><a href="#cb97-1144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-1145"><a href="#cb97-1145" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb97-1146"><a href="#cb97-1146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-1147"><a href="#cb97-1147" aria-hidden="true" tabindex="-1"></a>ms_fit <span class="ot">&lt;-</span> <span class="fu">msmFit</span>(</span>
+<span id="cb97-1148"><a href="#cb97-1148" aria-hidden="true" tabindex="-1"></a>  ms_base,</span>
+<span id="cb97-1149"><a href="#cb97-1149" aria-hidden="true" tabindex="-1"></a>  <span class="at">k =</span> <span class="dv">2</span>,</span>
+<span id="cb97-1150"><a href="#cb97-1150" aria-hidden="true" tabindex="-1"></a>  <span class="at">p =</span> <span class="dv">0</span>,</span>
+<span id="cb97-1151"><a href="#cb97-1151" aria-hidden="true" tabindex="-1"></a>  <span class="at">sw =</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">TRUE</span>),</span>
+<span id="cb97-1152"><a href="#cb97-1152" aria-hidden="true" tabindex="-1"></a>  <span class="at">control =</span> <span class="fu">list</span>(</span>
+<span id="cb97-1153"><a href="#cb97-1153" aria-hidden="true" tabindex="-1"></a>    <span class="at">parallel =</span> <span class="cn">FALSE</span></span>
+<span id="cb97-1154"><a href="#cb97-1154" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb97-1155"><a href="#cb97-1155" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb97-1156"><a href="#cb97-1156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-1157"><a href="#cb97-1157" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ms_fit)</span>
+<span id="cb97-1158"><a href="#cb97-1158" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb97-1159"><a href="#cb97-1159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-1160"><a href="#cb97-1160" aria-hidden="true" tabindex="-1"></a>Observations:</span>
+<span id="cb97-1161"><a href="#cb97-1161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-1162"><a href="#cb97-1162" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Identifies a low-volatility and a high-volatility regime</span>
+<span id="cb97-1163"><a href="#cb97-1163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-1164"><a href="#cb97-1164" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>Differences are driven mainly by volatility rather than mean returns.</span>
+<span id="cb97-1165"><a href="#cb97-1165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-1166"><a href="#cb97-1166" aria-hidden="true" tabindex="-1"></a>Regime occupancy (Using full post 2022 data) :</span>
+<span id="cb97-1167"><a href="#cb97-1167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-1170"><a href="#cb97-1170" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb97-1171"><a href="#cb97-1171" aria-hidden="true" tabindex="-1"></a>high_state <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb97-1172"><a href="#cb97-1172" aria-hidden="true" tabindex="-1"></a>smooth_prob <span class="ot">&lt;-</span> ms_fit<span class="sc">@</span>Fit<span class="sc">@</span>smoProb[<span class="sc">-</span><span class="dv">1</span>, , drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb97-1173"><a href="#cb97-1173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-1174"><a href="#cb97-1174" aria-hidden="true" tabindex="-1"></a>ms_data <span class="ot">&lt;-</span> garch_data_post2022 <span class="sc">|&gt;</span></span>
+<span id="cb97-1175"><a href="#cb97-1175" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb97-1176"><a href="#cb97-1176" aria-hidden="true" tabindex="-1"></a>    <span class="at">Prob_HighVol =</span> smooth_prob[, <span class="dv">2</span>]</span>
+<span id="cb97-1177"><a href="#cb97-1177" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb97-1178"><a href="#cb97-1178" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-1179"><a href="#cb97-1179" aria-hidden="true" tabindex="-1"></a>The full post-FTX sample suggests greater high-volatility regime occupancy after ETF approval.</span>
-<span id="cb97-1180"><a href="#cb97-1180" aria-hidden="true" tabindex="-1"></a>However due to the unbalanced observation I rerun below to review using balanced pre ETF and Post ETF data.</span>
-<span id="cb97-1181"><a href="#cb97-1181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-1182"><a href="#cb97-1182" aria-hidden="true" tabindex="-1"></a>Balanced dates:</span>
-<span id="cb97-1183"><a href="#cb97-1183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-1186"><a href="#cb97-1186" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb97-1187"><a href="#cb97-1187" aria-hidden="true" tabindex="-1"></a>ms_balanced <span class="ot">&lt;-</span> ms_data <span class="sc">|&gt;</span></span>
-<span id="cb97-1188"><a href="#cb97-1188" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Date <span class="sc">%in%</span> <span class="fu">c</span>(garch_pre<span class="sc">$</span>Date, garch_post<span class="sc">$</span>Date)) <span class="sc">|&gt;</span></span>
-<span id="cb97-1189"><a href="#cb97-1189" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb97-1190"><a href="#cb97-1190" aria-hidden="true" tabindex="-1"></a>    <span class="at">Period =</span> <span class="fu">if_else</span>(</span>
-<span id="cb97-1191"><a href="#cb97-1191" aria-hidden="true" tabindex="-1"></a>      Date <span class="sc">&lt;</span> <span class="fu">as.Date</span>(<span class="st">&quot;2024-01-11&quot;</span>),</span>
-<span id="cb97-1192"><a href="#cb97-1192" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;Pre_ETF&quot;</span>,</span>
-<span id="cb97-1193"><a href="#cb97-1193" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;Post_ETF&quot;</span></span>
-<span id="cb97-1194"><a href="#cb97-1194" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb97-1195"><a href="#cb97-1195" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb97-1179"><a href="#cb97-1179" aria-hidden="true" tabindex="-1"></a>ms_summary <span class="ot">&lt;-</span> ms_data <span class="sc">|&gt;</span></span>
+<span id="cb97-1180"><a href="#cb97-1180" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb97-1181"><a href="#cb97-1181" aria-hidden="true" tabindex="-1"></a>    <span class="at">Period =</span> <span class="fu">if_else</span>(</span>
+<span id="cb97-1182"><a href="#cb97-1182" aria-hidden="true" tabindex="-1"></a>      Date <span class="sc">&lt;</span> <span class="fu">as.Date</span>(<span class="st">&quot;2024-01-11&quot;</span>),</span>
+<span id="cb97-1183"><a href="#cb97-1183" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;Pre_ETF&quot;</span>,</span>
+<span id="cb97-1184"><a href="#cb97-1184" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;Post_ETF&quot;</span></span>
+<span id="cb97-1185"><a href="#cb97-1185" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb97-1186"><a href="#cb97-1186" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb97-1187"><a href="#cb97-1187" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Period) <span class="sc">|&gt;</span></span>
+<span id="cb97-1188"><a href="#cb97-1188" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb97-1189"><a href="#cb97-1189" aria-hidden="true" tabindex="-1"></a>    <span class="at">N =</span> <span class="fu">n</span>(),</span>
+<span id="cb97-1190"><a href="#cb97-1190" aria-hidden="true" tabindex="-1"></a>    <span class="at">Avg_HighVol_Prob =</span> <span class="fu">mean</span>(Prob_HighVol),</span>
+<span id="cb97-1191"><a href="#cb97-1191" aria-hidden="true" tabindex="-1"></a>    <span class="at">HighVol_Share =</span> <span class="fu">mean</span>(Prob_HighVol <span class="sc">&gt;</span> <span class="fl">0.5</span>)</span>
+<span id="cb97-1192"><a href="#cb97-1192" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb97-1193"><a href="#cb97-1193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-1194"><a href="#cb97-1194" aria-hidden="true" tabindex="-1"></a>ms_summary</span>
+<span id="cb97-1195"><a href="#cb97-1195" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb97-1196"><a href="#cb97-1196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-1197"><a href="#cb97-1197" aria-hidden="true" tabindex="-1"></a>ms_balanced_summary <span class="ot">&lt;-</span> ms_balanced <span class="sc">|&gt;</span></span>
-<span id="cb97-1198"><a href="#cb97-1198" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Period) <span class="sc">|&gt;</span></span>
-<span id="cb97-1199"><a href="#cb97-1199" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb97-1200"><a href="#cb97-1200" aria-hidden="true" tabindex="-1"></a>    <span class="at">N =</span> <span class="fu">n</span>(),</span>
-<span id="cb97-1201"><a href="#cb97-1201" aria-hidden="true" tabindex="-1"></a>    <span class="at">Avg_HighVol_Prob =</span> <span class="fu">mean</span>(Prob_HighVol),</span>
-<span id="cb97-1202"><a href="#cb97-1202" aria-hidden="true" tabindex="-1"></a>    <span class="at">HighVol_Share =</span> <span class="fu">mean</span>(Prob_HighVol <span class="sc">&gt;</span> <span class="fl">0.5</span>)</span>
-<span id="cb97-1203"><a href="#cb97-1203" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb97-1204"><a href="#cb97-1204" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-1205"><a href="#cb97-1205" aria-hidden="true" tabindex="-1"></a>ms_balanced_summary</span>
-<span id="cb97-1206"><a href="#cb97-1206" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb97-1207"><a href="#cb97-1207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-1208"><a href="#cb97-1208" aria-hidden="true" tabindex="-1"></a>Observations:</span>
-<span id="cb97-1209"><a href="#cb97-1209" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb97-1210"><a href="#cb97-1210" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>In the balanced sample, high-volatility regime occupancy is higher post-ETF.</span>
+<span id="cb97-1197"><a href="#cb97-1197" aria-hidden="true" tabindex="-1"></a>Observations:</span>
+<span id="cb97-1198"><a href="#cb97-1198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-1199"><a href="#cb97-1199" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>The full post-FTX sample suggests greater high-volatility regime occupancy after ETF approval.</span>
+<span id="cb97-1200"><a href="#cb97-1200" aria-hidden="true" tabindex="-1"></a>    However due to the unbalanced observation I rerun below to review using balanced pre ETF and Post ETF data.</span>
+<span id="cb97-1201"><a href="#cb97-1201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-1202"><a href="#cb97-1202" aria-hidden="true" tabindex="-1"></a>Balanced dates:</span>
+<span id="cb97-1203"><a href="#cb97-1203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-1206"><a href="#cb97-1206" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb97-1207"><a href="#cb97-1207" aria-hidden="true" tabindex="-1"></a>ms_balanced <span class="ot">&lt;-</span> ms_data <span class="sc">|&gt;</span></span>
+<span id="cb97-1208"><a href="#cb97-1208" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Date <span class="sc">%in%</span> <span class="fu">c</span>(garch_pre<span class="sc">$</span>Date, garch_post<span class="sc">$</span>Date)) <span class="sc">|&gt;</span></span>
+<span id="cb97-1209"><a href="#cb97-1209" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb97-1210"><a href="#cb97-1210" aria-hidden="true" tabindex="-1"></a>    <span class="at">Period =</span> <span class="fu">if_else</span>(</span>
+<span id="cb97-1211"><a href="#cb97-1211" aria-hidden="true" tabindex="-1"></a>      Date <span class="sc">&lt;</span> <span class="fu">as.Date</span>(<span class="st">&quot;2024-01-11&quot;</span>),</span>
+<span id="cb97-1212"><a href="#cb97-1212" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;Pre_ETF&quot;</span>,</span>
+<span id="cb97-1213"><a href="#cb97-1213" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;Post_ETF&quot;</span></span>
+<span id="cb97-1214"><a href="#cb97-1214" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb97-1215"><a href="#cb97-1215" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb97-1216"><a href="#cb97-1216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-1217"><a href="#cb97-1217" aria-hidden="true" tabindex="-1"></a>ms_balanced_summary <span class="ot">&lt;-</span> ms_balanced <span class="sc">|&gt;</span></span>
+<span id="cb97-1218"><a href="#cb97-1218" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Period) <span class="sc">|&gt;</span></span>
+<span id="cb97-1219"><a href="#cb97-1219" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb97-1220"><a href="#cb97-1220" aria-hidden="true" tabindex="-1"></a>    <span class="at">N =</span> <span class="fu">n</span>(),</span>
+<span id="cb97-1221"><a href="#cb97-1221" aria-hidden="true" tabindex="-1"></a>    <span class="at">Avg_HighVol_Prob =</span> <span class="fu">mean</span>(Prob_HighVol),</span>
+<span id="cb97-1222"><a href="#cb97-1222" aria-hidden="true" tabindex="-1"></a>    <span class="at">HighVol_Share =</span> <span class="fu">mean</span>(Prob_HighVol <span class="sc">&gt;</span> <span class="fl">0.5</span>)</span>
+<span id="cb97-1223"><a href="#cb97-1223" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb97-1224"><a href="#cb97-1224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-1225"><a href="#cb97-1225" aria-hidden="true" tabindex="-1"></a>ms_balanced_summary</span>
+<span id="cb97-1226"><a href="#cb97-1226" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb97-1227"><a href="#cb97-1227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-1228"><a href="#cb97-1228" aria-hidden="true" tabindex="-1"></a>Observations:</span>
+<span id="cb97-1229"><a href="#cb97-1229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-1230"><a href="#cb97-1230" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>In the balanced sample, high-volatility regime occupancy is higher post-ETF.</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
