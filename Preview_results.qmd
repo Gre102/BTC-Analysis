@@ -1,0 +1,1104 @@
+---
+title: "Bitcoin Volatility Analysis"
+subtitle: "Structural Breaks, GARCH, and Markov-Switching Model"
+author: "Gregory Maldonado"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: true
+    code-tools: true
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+editor: 
+  markdown: 
+    wrap: sentence
+---
+
+# Libraries
+
+```{r}
+library(quantmod)
+library(dplyr)
+library(ggplot2)
+library(moments)
+library(zoo)
+library(car)
+library(FinTS)
+library(tseries)
+library(strucchange)
+library(rugarch)
+library(MSwM)
+```
+
+# BTC Data
+
+## 1. Data Pull
+
+Here I am pulling daily close prices from Yahoo Finance from Jan 2016 to Jul 2026.
+The database is different from my VAR analysis as I wanted to work with the fact that BTC prices trade 24/7.
+
+```{r}
+btc_raw <- getSymbols(
+  "BTC-USD",
+  src = "yahoo",
+  from = as.Date("2016-01-04"),
+  to = as.Date("2026-07-31"),
+  auto.assign = FALSE
+)
+```
+
+```{r}
+raw_combined <- tibble::tibble(
+  Date = as.Date(zoo::index(btc_raw)),
+  BTC = as.numeric(Cl(btc_raw))
+) |>
+  arrange(Date)
+```
+
+## 2. Log Returns
+
+```{r}
+full_log <- raw_combined |>
+  mutate(
+    log_BTC = log(BTC),
+    log_return = log(BTC / lag(BTC))
+  )
+```
+
+## 3. Data Split
+
+Here I am building different splits on the data.
+The first split is on Pre ETF and Post ETF introduction.
+However, I am also splitting the data to have the same days pre and post ETF introduction.
+The idea was to show a balance split across data.
+
+```{r}
+break_date <- as.Date("2024-01-11")
+```
+
+```{r}
+full_pre <- full_log |>
+  filter(Date < break_date)
+
+full_post <- full_log |>
+  filter(Date >= break_date)
+```
+
+```{r}
+n_balanced <- min(
+  sum(!is.na(full_pre$log_return)),
+  sum(!is.na(full_post$log_return))
+)
+
+balanced_pre <- full_pre |>
+  filter(!is.na(log_return)) |>
+  slice_tail(n = n_balanced)
+
+balanced_post <- full_post |>
+  filter(!is.na(log_return)) |>
+  slice_head(n = n_balanced)
+
+balanced_full <- bind_rows(
+  balanced_pre,
+  balanced_post
+) |>
+  arrange(Date)
+
+garch_data_post2022 <- full_log |>
+  filter(
+    Date > as.Date("2022-11-11"),
+    !is.na(log_return)
+  ) |>
+  arrange(Date) |> 
+  mutate(
+    ETF_dummy = if_else(
+      Date >= as.Date("2024-01-11"),
+      1,
+      0
+    )
+  )
+garch_pre <- garch_data_post2022 |>
+  filter(ETF_dummy == 0)
+
+n_regime <- nrow(garch_pre)
+
+garch_post <- garch_data_post2022 |>
+  filter(ETF_dummy == 1) |>
+  slice_head(n = n_regime)
+
+```
+
+# Price Plot
+
+```{r}
+ggplot(raw_combined, aes(x = Date, y = BTC)) +
+  geom_line() +
+  labs(
+    title = "Bitcoin Price",
+    x = "Date",
+    y = "BTC/USD"
+  ) +
+  theme_minimal()
+```
+
+# Log Return Plot
+
+```{r}
+ggplot(full_log, aes(x = Date, y = log_return)) +
+  geom_line() +
+  labs(
+    title = "Bitcoin Daily Log Returns",
+    x = "Date",
+    y = "Log Return"
+  ) +
+  theme_minimal()
+```
+
+# Descriptive Statistics
+
+"Bal" indicates my data split using the same number od days post/pre ETF introduction.
+"Full" assumes all the data history from 2016.
+
+```{r}
+summary_data <- bind_rows(
+  full_log |>
+    select(Date, log_return) |>
+    mutate(Period = "Full"),
+  
+  full_pre |>
+    select(Date, log_return) |>
+    mutate(Period = "Full_PreETF"),
+  
+  full_post |>
+    select(Date, log_return) |>
+    mutate(Period = "Full_PostETF"),
+  
+  balanced_pre |>
+    select(Date, log_return) |>
+    mutate(Period = "Bal_PreETF"),
+  
+  balanced_post |>
+    select(Date, log_return) |>
+    mutate(Period = "Bal_PostETF")
+)
+
+summary_table <- summary_data |>
+  group_by(Period) |>
+  summarise(
+    N = sum(!is.na(log_return)),
+    Mean = mean(log_return, na.rm = TRUE),
+    Median = median(log_return, na.rm = TRUE),
+    SD = sd(log_return, na.rm = TRUE),
+    Min = min(log_return, na.rm = TRUE),
+    Q05 = quantile(log_return, 0.05, na.rm = TRUE),
+    Q25 = quantile(log_return, 0.25, na.rm = TRUE),
+    Q75 = quantile(log_return, 0.75, na.rm = TRUE),
+    Q95 = quantile(log_return, 0.95, na.rm = TRUE),
+    Max = max(log_return, na.rm = TRUE),
+    Skewness = skewness(log_return, na.rm = TRUE),
+    Kurtosis = kurtosis(log_return, na.rm = TRUE)
+  )
+
+knitr::kable(
+  summary_table,
+  digits = 4,
+  caption = "Descriptive Statistics of Bitcoin Log Returns"
+)
+
+```
+
+# Graphs
+
+## 1. Histogram
+
+```{r}
+ggplot(summary_data, aes(x = log_return)) +
+  geom_histogram(bins = 50) +
+  facet_wrap(~ Period, scales = "free_y") +
+  labs(
+    title = "Distribution of Bitcoin Log Returns",
+    x = "Daily Log Return",
+    y = "Frequency"
+  ) +
+  theme_minimal()
+```
+
+## 2. Density
+
+```{r}
+ggplot(summary_data, aes(x = log_return)) +
+  geom_density() +
+  facet_wrap(~ Period) +
+  labs(
+    title = "Density of Bitcoin Log Returns",
+    x = "Daily Log Return",
+    y = "Density"
+  ) +
+  theme_minimal()
+```
+
+## 3. Pre/Post Histogram
+
+**Using the balanced data**
+
+```{r}
+summary_data |>
+  filter(Period %in% c("Bal_PreETF", "Bal_PostETF")) |>
+  ggplot(aes(
+    x = log_return,
+    fill = Period
+  )) +
+  geom_histogram(
+    bins = 50,
+    alpha = 0.5,
+    position = "identity"
+  ) +
+  labs(
+    title = "Bitcoin Return Distribution: Pre- vs Post-ETF",
+    x = "Daily Log Return",
+    y = "Frequency",
+    fill = "Period"
+  ) +
+  theme_minimal()
+```
+
+## 4. QQ Plot
+
+**Using Balanced data**
+
+```{r}
+summary_data |>
+  filter(Period %in% c("Bal_PreETF", "Bal_PostETF")) |>
+  ggplot(aes(sample = log_return)) +
+  stat_qq() +
+  stat_qq_line() +
+  facet_wrap(~ Period) +
+  labs(
+    title = "QQ Plots of Bitcoin Returns",
+    x = "Theoretical Quantiles",
+    y = "Sample Quantiles"
+  ) +
+  theme_minimal()
+```
+
+## 5. Annualized 30d Realized Vol
+
+```{r}
+full_log <- full_log |>
+  mutate(
+    vol_30d = rollapply(
+      log_return,
+      width = 30,
+      FUN = sd,
+      fill = NA,
+      align = "right",
+      na.rm = TRUE
+    ),
+    vol_30d_annualized = vol_30d * sqrt(365)
+  )
+
+ggplot(full_log, aes(x = Date, y = vol_30d_annualized)) +
+  geom_line() +
+  geom_vline(
+    xintercept = as.Date("2024-01-11"),
+    linetype = "dashed"
+  ) +
+  labs(
+    title = "Bitcoin 30-Day Rolling Volatility",
+    x = "Date",
+    y = "Annualized Volatility"
+  ) +
+  theme_minimal()
+```
+
+# Distribution Tests
+
+## 1. Brown–Forsythe test
+
+### 1.1 BF test on balanced data
+
+The Brown–Forsythe test checks whether different groups have equal variances.
+It uses the median instead of the mean to reduce sensitivity to outliers.
+The null hypothesis is that the variances are equal across both periods.
+
+```{r}
+bf_data <- summary_data |>
+  filter(Period %in% c("Bal_PreETF", "Bal_PostETF")) |>
+  filter(!is.na(log_return))
+
+leveneTest(
+  log_return ~ Period,
+  data = bf_data,
+  center = median
+)
+```
+
+### 1.2 BF test on data post 2022
+
+The below code uses the 425-observation GARCH pre/post samples defined later in the analysis.
+This is different from my balanced data as I determined to instead rely on post FTX collapse data (post Nov 2022).
+I made the decision to focus on post FTX due to results on the structural break analysis.
+
+```{r}
+
+
+bf_425 <- bind_rows(
+  garch_pre |> mutate(Period = "Pre_ETF"),
+  garch_post |> mutate(Period = "Post_ETF")
+)
+
+car::leveneTest(
+  log_return ~ Period,
+  data = bf_425,
+  center = median
+)
+```
+
+## 2. Welch test
+
+Checking mean equality.
+
+```{r}
+welch_test <- t.test(
+  log_return ~ Period,
+  data = bf_data,
+  var.equal = FALSE
+)
+
+welch_test
+```
+
+## 3. KS test
+
+Used to determine if two independent samples come from the same underlying continuous distribution
+
+```{r}
+pre_returns <- bf_data |>
+  filter(Period == "Bal_PreETF") |>
+  pull(log_return)
+
+post_returns <- bf_data |>
+  filter(Period == "Bal_PostETF") |>
+  pull(log_return)
+
+ks_test <- ks.test(
+  pre_returns,
+  post_returns
+)
+
+ks_test
+```
+
+# Diagnostic tests
+
+## 1. ADF Test
+
+### 1.1 ADF on full history
+
+Test on the log price series (using the full data history) :
+
+```{r}
+adf.test(
+  full_log$log_BTC,
+  alternative = "stationary"
+)
+```
+
+### 1.2 ADF on Balanced history
+
+Test on the log price series (425 Obs balanced ) :
+
+```{r}
+adf.test(
+  garch_data_post2022$log_BTC,
+  alternative = "stationary"
+)
+```
+
+### 1.3 ADF on Log returns  - full history
+
+Test on log returns (using the full data history):
+
+```{r}
+adf.test(
+  na.omit(garch_data_post2022$log_return),
+  alternative = "stationary"
+)
+```
+
+### 1.4 ADF on Log returns  - balanced history
+
+Test on the log price series (425 Obs balanced ) :
+
+```{r}
+adf.test(
+  na.omit(garch_data_post2022$log_return),
+  alternative = "stationary"
+)
+```
+
+## 2. ACF /PACF Test
+
+### 2.1 ACF on Full History 
+
+```{r}
+acf(
+  na.omit(full_log$log_return),
+  lag.max = 30,
+  main = "ACF of BTC Daily Log Returns - Full History"
+)
+```
+
+### 2.1 ACF on Balanced History 
+
+```{r}
+acf(
+  na.omit(garch_data_post2022$log_return),
+  lag.max = 30,
+  main = "ACF of BTC Daily Log Returns -  Obs Balanced"
+)
+```
+
+## 3. ACF Squared Returns
+
+### 3.1 ACF SR on Full History 
+
+```{r}
+acf(
+  na.omit(full_log$log_return^2),
+  lag.max = 30,
+  main = "ACF of Squared BTC Log Returns- Full History"
+)
+```
+
+### 3.2 ACF SR on Balanced History 
+
+```{r}
+acf(
+  na.omit(garch_data_post2022$log_return^2),
+  lag.max = 30,
+  main = "ACF of Squared BTC Log Returns - Obs Balanced"
+)
+```
+
+## 4. Ljung Box Test
+
+### 4.1 LB Returns - Full History 
+
+Returns - Full Data :
+
+```{r}
+Box.test(
+  na.omit(full_log$log_return),
+  lag = 20,
+  type = "Ljung-Box"
+)
+```
+
+### 4.2 LB Returns - Balanced History 
+
+Returns - Balanced Data :
+
+```{r}
+Box.test(
+  na.omit(garch_data_post2022$log_return),
+  lag = 20,
+  type = "Ljung-Box"
+)
+```
+
+### 4.3 LB Sq Returns - Full History 
+
+Squared returns - Full Data :
+
+```{r}
+Box.test(
+  na.omit(full_log$log_return)^2,
+  lag = 20,
+  type = "Ljung-Box"
+)
+```
+
+### 4.4 LB Sq Returns - Balanced History 
+
+Squared returns - Balanced Data :
+
+```{r}
+Box.test(
+  na.omit(garch_data_post2022$log_return)^2,
+  lag = 20,
+  type = "Ljung-Box"
+)
+```
+
+## 5. Arch LM test
+
+### 5.1 ARCH LM - Full History  
+
+-   Full Data
+
+```{r}
+for (L in c(5, 10, 12, 20)) {
+  
+  print(
+    FinTS::ArchTest(
+      na.omit(full_log$log_return),
+      lags = L,
+      demean = TRUE
+    )
+  )
+}
+```
+
+### 5.2 ARCH LM - Balanced History  
+
+-   Balanced Data
+
+```{r}
+for (L in c(5, 10, 12, 20)) {
+  
+  print(
+    FinTS::ArchTest(
+      na.omit(garch_data_post2022$log_return),
+      lags = L,
+      demean = TRUE
+    )
+  )
+}
+```
+
+# Structural break analysis
+
+## 1. Bai Perron (unknown break test date)
+
+These tests are reviewing/detecting shifts in unconditional mean and returns across regimes.
+
+The algorithm searches through possible combinations of dates and finds the segmentation that best fits the data.
+It works by minimizing the sum of squared residuals across all possible partitions of the sample into m regimes, using dynamic programming for efficiency, and provides test statistics to determine both the number of breaks and their locations.
+
+Additonal notes:
+
+-   The graphs show that allowing additional structural breaks mechanically reduces the residual sum of squares. However, BIC penalizes the additional parameters and therefore selects only those breaks for which the improvement in fit is sufficiently large.
+-   For Bitcoin returns, BIC does not select an unrestricted break in the mean. In contrast, the squared-return specification identifies structural breaks in volatility.
+-   One of the key BIC-selected volatility breaks occurs around November 2022, coinciding with the FTX bankruptcy. This suggests that the 2022 episode represents an important change in the volatility regime.
+-   To reduce the influence of this earlier regime change on the ETF comparison, I therefore restrict the main pre/post analysis to observations after 11 November 2022 and construct the balanced ETF sample within this post-FTX period.
+
+### 1.1 BP - Mean 
+
+Below model is running is running on the full unrestricted historical data
+
+```{r}
+bp_data <- full_log |>
+  filter(!is.na(log_return)) |>
+  arrange(Date) |>
+  mutate(return_sq = log_return^2)
+```
+
+Bai–Perron on the mean (Shows no unrestricted break in the mean):
+
+```{r}
+bp_mean <- breakpoints(
+  log_return ~ 1,
+  data = bp_data,
+  h = 0.15
+)
+
+plot(bp_mean)
+#bp_data$Date[breakpoints(bp_mean)$breakpoints]
+```
+
+-   Graph basically shows how adding structural breaks reduces the residual error, but the improvement is not large enough to justify the extra parameters as indicated per BIC.
+-   On the above graph there is no unrestricted mean break. But it does find one for the squared return. The most significant break is in Nov 2022. This events coincides with FTX bankruptcy. Given the significance of the event I modified my balanced data to exceed this date.
+
+### 1.2 BP - Squared Returns  
+
+Bai–Perron on squared returns (1 break) :
+
+```{r}
+bp_vol <- breakpoints(
+  return_sq ~ 1,
+  data = bp_data,
+  h = 0.15
+)
+
+#summary(bp_mean)
+#summary(bp_vol)
+
+plot(bp_vol)
+
+#bp_data$Date[breakpoints(bp_mean)$breakpoints]
+bp_data$Date[breakpoints(bp_vol)$breakpoints]
+```
+
+Date of the break:
+
+```{r}
+bp_data$Date[breakpoints(bp_vol)$breakpoints]
+```
+
+### 1.3 BP - Post 2022/FTX 
+
+Running on an amended timeframe to avoid the major FTX impact in 2022.
+Bai–Perron on squared returns (0 breaks) :
+
+```{r}
+bp_data_post2022 <- full_log |>
+  filter(!is.na(log_return)) |>
+  arrange(Date) |>
+  mutate(return_sq = log_return^2) |> 
+  filter(Date >= as.Date("2022-11-12"))
+
+bp_vol_postftx <- breakpoints(
+  return_sq ~ 1,
+  data = bp_data_post2022,  
+  h = 0.10
+)
+
+plot(bp_vol_postftx)
+
+#summary(bp_vol_postftx)
+#bp_data_post2022$Date[breakpoints(bp_vol_postftx)$breakpoints]
+```
+
+## 2. Chow Test (known date)
+
+Chow test asks directly whether 11 January 2024, the ETF approval date, is itself a structural break.
+
+```{r}
+etf_date <- as.Date("2024-01-11")
+etf_obs <- which(bp_data_post2022$Date == etf_date)
+
+```
+
+### 2.1 Chow Test - Returns 
+
+Chow test on returns:
+
+```{r}
+
+
+chow_mean <- sctest(
+  log_return ~ 1,
+  type = "Chow",
+  point = etf_obs,
+  data = bp_data_post2022
+)
+print(chow_mean)
+```
+
+### 2.2 Chow Test - Squared Returns 
+
+Chow test on squared returns:
+
+```{r}
+
+chow_var <- sctest(
+  return_sq ~ 1,
+  type = "Chow",
+  point = etf_obs,
+  data = bp_data_post2022
+)
+print(chow_var)
+```
+
+## 3. CUMSUM on variance
+
+CUSUM tests whether the model parameters remain stable over time by tracking the cumulative sum of residuals and checking whether it stays within critical bounds
+
+CUSUM on variance:
+
+```{r}
+cusum_var <- efp(
+  return_sq ~ 1, 
+  type = "OLS-CUSUM", 
+  data = bp_data_post2022
+)
+
+plot(cusum_var, main = "CUSUM: Squared Returns (post-FTX)")
+```
+
+# GARCH Models 
+
+## 1. GARCH
+
+Added Observations on the models after the each result
+
+### 1.1 GARCH(1,1) - Post 2022 
+
+```{r}
+garch_data_post2022 <- full_log |>
+  filter(
+    Date > as.Date("2022-11-11"),
+    !is.na(log_return)
+  ) |>
+  arrange(Date) |> 
+  mutate(
+    ETF_dummy = if_else(
+      Date >= as.Date("2024-01-11"),
+      1,
+      0
+    )
+  )
+
+garch_spec <- ugarchspec(
+  variance.model = list(
+    model = "sGARCH",
+    garchOrder = c(1, 1)
+  ),
+  mean.model = list(
+    armaOrder = c(0, 0),
+    include.mean = TRUE
+  ),
+  distribution.model = "std"
+)
+
+garch_fit <- ugarchfit(
+  spec = garch_spec,
+  data = garch_data_post2022$log_return,
+  solver = "hybrid"
+)
+```
+
+Summary of the fitted model:
+
+```{r}
+garch_fit
+```
+
+Persistance:
+
+```{r}
+#Persistance
+persistence(garch_fit)
+```
+
+Observations:
+
+-   Very high volatility persistence: α+β≈0.986, so volatility shocks decay slowly
+-   Mean return is not significant, while β is strongly significant
+-   Residual autocorrelation is largely removed, suggesting the mean specification is adequate
+-   Squared residuals still show dependence, indicating some volatility dynamics remain unexplained
+-   Nyblom test indicates parameter instability over the sample
+-   Sign-bias test indicates asymmetry, particularly for negative shocks
+
+### 1.2 ETF Dummy
+
+```{r}
+etf_xreg <- matrix(
+  garch_data_post2022$ETF_dummy,
+  ncol = 1
+)
+
+garch_etf_spec <- ugarchspec(
+  variance.model = list(
+    model = "sGARCH",
+    garchOrder = c(1, 1),
+    external.regressors = etf_xreg
+  ),
+  mean.model = list(
+    armaOrder = c(0, 0),
+    include.mean = TRUE
+  ),
+  distribution.model = "std"
+)
+
+garch_etf_fit <- ugarchfit(
+  spec = garch_etf_spec,
+  data = garch_data_post2022$log_return,
+  solver = "hybrid"
+)
+
+garch_etf_fit
+```
+
+Observations:
+
+-   ETF variance dummy is positive but not statistically significant
+-   Model fit changes very little versus the baseline GARCH
+
+### 1.3 Pre/Post Garch
+
+```{r}
+garch_pre <- garch_data_post2022 |>
+  filter(ETF_dummy == 0)
+
+n_regime <- nrow(garch_pre)
+
+garch_post <- garch_data_post2022 |>
+  filter(ETF_dummy == 1) |>
+  slice_head(n = n_regime)
+
+
+garch_pre_fit <- ugarchfit(
+  spec = garch_spec,
+  data = garch_pre$log_return,
+  solver = "hybrid"
+)
+
+garch_post_fit <- ugarchfit(
+  spec = garch_spec,
+  data = garch_post$log_return,
+  solver = "hybrid"
+)
+
+
+```
+
+Pre ETF results:
+
+```{r}
+garch_pre_fit
+
+```
+
+Post ETF results:
+
+```{r}
+
+garch_post_fit
+
+```
+
+Observations:
+
+-   Volatility persistence falls substantially pre vs post
+-   Mean returns are insignificant in both periods.
+-   Pre-ETF: strong persistence and significant ARCH respons with Nyblom and sign-bias tests indicate instability/asymmetry.
+-   Post-ETF: residual diagnostics, stability tests and sign-bias tests are substantially cleaner, suggesting the GARCH specification fits the post period better.
+
+## 2. GJR-GARCH
+
+### 2.1 GJR-GARCH (1,1)
+
+```{r}
+gjr_spec <- ugarchspec(
+  variance.model = list(
+    model = "gjrGARCH",
+    garchOrder = c(1, 1)
+  ),
+  mean.model = list(
+    armaOrder = c(0, 0),
+    include.mean = TRUE
+  ),
+  distribution.model = "std"
+)
+
+gjr_fit <- ugarchfit(
+  spec = gjr_spec,
+  data = garch_data_post2022$log_return,
+  solver = "hybrid"
+)
+
+gjr_fit
+
+```
+
+Observations:
+
+-   Volatility Is Persistent
+-   The ARCH term is significant, while the asymmetric term γ is positive but not significant with robust standard errors
+-   Compared with the symmetric GARCH, the GJR specification improves parameter stability -nyblom
+-   Squared residuals still show some remaining dependence
+-   GJR-GARCH provides a slightly better fit but the evidence for a strong leverage/asymmetry effect is limited.
+
+### 2.2 ETF Dummy
+
+```{r}
+gjr_etf_spec <- ugarchspec(
+  variance.model = list(
+    model = "gjrGARCH",
+    garchOrder = c(1, 1),
+    external.regressors = etf_xreg
+  ),
+  mean.model = list(
+    armaOrder = c(0, 0),
+    include.mean = TRUE
+  ),
+  distribution.model = "std"
+)
+
+gjr_etf_fit <- ugarchfit(
+  spec = gjr_etf_spec,
+  data = garch_data_post2022$log_return,
+  solver = "hybrid"
+)
+
+gjr_etf_fit
+```
+
+Obesrevations: - ETF variance dummy remains insignificant - The asymmetry coefficient γ is also insignificant - Volatility persistence remains high - ETF dummy provides almost no improvement in fit
+
+### 2.3 Pre/Post Garch
+
+```{r}
+gjr_spec <- ugarchspec(
+  variance.model = list(
+    model = "gjrGARCH",
+    garchOrder = c(1, 1)
+  ),
+  mean.model = list(
+    armaOrder = c(0, 0),
+    include.mean = TRUE
+  ),
+  distribution.model = "std"
+)
+
+gjr_pre_fit <- ugarchfit(
+  spec = gjr_spec,
+  data = garch_pre$log_return,
+  solver = "hybrid"
+)
+
+gjr_post_fit <- ugarchfit(
+  spec = gjr_spec,
+  data = garch_post$log_return,
+  solver = "hybrid"
+)
+
+gjr_pre_fit
+gjr_post_fit
+```
+
+Observations: - Estimated volatility persistence falls materially -\> 0.995 pre-ETF vs. 0.914 post-ETF - The asymmetry coefficient γ is insignificant in both periods - Pre-ETF: GJR substantially improves parameter stability relative to the symmetric GARCH - Post-ETF: No residual autocorrelation, no significant sign bias, stable parameters, and strong goodness-of-fit - Post-ETF volatility process appears less persistent and more stable
+
+### 2.4 LR Test
+
+Pre and post have the same number of rows, so they are reunited for the LR test.
+
+```{r}
+garch_balanced <- bind_rows(
+  garch_pre,
+  garch_post
+) |>
+  arrange(Date)
+
+nrow(garch_balanced)
+nrow(garch_pre) + nrow(garch_post)
+
+gjr_pooled_bal_fit <- ugarchfit(
+  spec = gjr_spec,
+  data = garch_balanced$log_return,
+  solver = "hybrid"
+)
+
+ll_pooled <- likelihood(gjr_pooled_bal_fit)
+
+ll_separate <-
+  likelihood(gjr_pre_fit) +
+  likelihood(gjr_post_fit)
+
+LR <- 2 * (ll_separate - ll_pooled)
+
+LR
+
+p_LR <- pchisq(
+  LR,
+  df = 6,
+  lower.tail = FALSE
+)
+
+p_LR
+```
+
+Observation:
+
+-   LR statistic = 17.17, with p = 0.0087.
+-   Null Hypothesis is rejected: the overall conditional-volatility process differs significantly across the two periods.
+
+# Markov-switching mean/variance model
+
+The Markov-switching model is used as an alternative way to capture changes in Bitcoin volatility without imposing a fixed structural break date.
+I use a simple two-state specification in which only the conditional mean and variance are allowed to switch across regimes
+
+Model Estimation:
+
+```{r}
+ms_base <- lm(
+  log_return ~ 1,
+  data = garch_data_post2022
+)
+
+set.seed(123)
+
+ms_fit <- msmFit(
+  ms_base,
+  k = 2,
+  p = 0,
+  sw = c(TRUE, TRUE),
+  control = list(
+    parallel = FALSE
+  )
+)
+
+summary(ms_fit)
+```
+
+Observations:
+
+-   Identifies a low-volatility and a high-volatility regime
+
+-   Differences are driven mainly by volatility rather than mean returns.
+
+Regime occupancy (Using full post 2022 data) :
+
+```{r}
+high_state <- 2
+smooth_prob <- ms_fit@Fit@smoProb[-1, , drop = FALSE]
+
+ms_data <- garch_data_post2022 |>
+  mutate(
+    Prob_HighVol = smooth_prob[, 2]
+  )
+
+ms_summary <- ms_data |>
+  mutate(
+    Period = if_else(
+      Date < as.Date("2024-01-11"),
+      "Pre_ETF",
+      "Post_ETF"
+    )
+  ) |>
+  group_by(Period) |>
+  summarise(
+    N = n(),
+    Avg_HighVol_Prob = mean(Prob_HighVol),
+    HighVol_Share = mean(Prob_HighVol > 0.5)
+  )
+
+ms_summary
+```
+
+The full post-FTX sample suggests greater high-volatility regime occupancy after ETF approval.
+However due to the unbalanced observation I rerun below to review using balanced pre ETF and Post ETF data.
+
+Balanced dates:
+
+```{r}
+ms_balanced <- ms_data |>
+  filter(Date %in% c(garch_pre$Date, garch_post$Date)) |>
+  mutate(
+    Period = if_else(
+      Date < as.Date("2024-01-11"),
+      "Pre_ETF",
+      "Post_ETF"
+    )
+  )
+
+ms_balanced_summary <- ms_balanced |>
+  group_by(Period) |>
+  summarise(
+    N = n(),
+    Avg_HighVol_Prob = mean(Prob_HighVol),
+    HighVol_Share = mean(Prob_HighVol > 0.5)
+  )
+
+ms_balanced_summary
+```
+
+Observations:
+
+-   In the balanced sample, high-volatility regime occupancy is higher post-ETF.
