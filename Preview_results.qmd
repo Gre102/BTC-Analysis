@@ -36,7 +36,7 @@ library(MSwM)
 
 # BTC Data
 
-## 1. Data Pull
+## Data Pull
 
 Here I am pulling daily close prices from Yahoo Finance from Jan 2016 to Jul 2026.
 The database is different from my VAR analysis as I wanted to work with the fact that BTC prices trade 24/7.
@@ -59,7 +59,7 @@ raw_combined <- tibble::tibble(
   arrange(Date)
 ```
 
-## 2. Log Returns
+## Log Returns
 
 ```{r}
 full_log <- raw_combined |>
@@ -69,7 +69,7 @@ full_log <- raw_combined |>
   )
 ```
 
-## 3. Data Split
+## Data Split
 
 Here I am building different splits on the data.
 The first split is on Pre ETF and Post ETF introduction.
@@ -213,7 +213,7 @@ knitr::kable(
 
 # Graphs
 
-## 1. Histogram
+## Histogram
 
 ```{r}
 ggplot(summary_data, aes(x = log_return)) +
@@ -227,7 +227,7 @@ ggplot(summary_data, aes(x = log_return)) +
   theme_minimal()
 ```
 
-## 2. Density
+## Density
 
 ```{r}
 ggplot(summary_data, aes(x = log_return)) +
@@ -241,7 +241,7 @@ ggplot(summary_data, aes(x = log_return)) +
   theme_minimal()
 ```
 
-## 3. Pre/Post Histogram
+## Pre/Post Histogram
 
 **Using the balanced data**
 
@@ -266,7 +266,7 @@ summary_data |>
   theme_minimal()
 ```
 
-## 4. QQ Plot
+## QQ Plot
 
 **Using Balanced data**
 
@@ -285,7 +285,7 @@ summary_data |>
   theme_minimal()
 ```
 
-## 5. Annualized 30d Realized Vol
+## Annualized 30d Realized Vol
 
 ```{r}
 full_log <- full_log |>
@@ -317,9 +317,9 @@ ggplot(full_log, aes(x = Date, y = vol_30d_annualized)) +
 
 # Distribution Tests
 
-## 1. Brown–Forsythe test
+## Brown–Forsythe test
 
-### 1.1 BF test on balanced data
+### BF test on balanced data
 
 The Brown–Forsythe test checks whether different groups have equal variances.
 It uses the median instead of the mean to reduce sensitivity to outliers.
@@ -337,7 +337,7 @@ leveneTest(
 )
 ```
 
-### 1.2 BF test on data post 2022
+### BF test on data post 2022
 
 The below code uses the 425-observation GARCH pre/post samples defined later in the analysis.
 This is different from my balanced data as I determined to instead rely on post FTX collapse data (post Nov 2022).
@@ -358,7 +358,7 @@ car::leveneTest(
 )
 ```
 
-## 2. Welch test
+## Welch test
 
 Checking mean equality.
 
@@ -372,7 +372,7 @@ welch_test <- t.test(
 welch_test
 ```
 
-## 3. KS test
+## KS test
 
 Used to determine if two independent samples come from the same underlying continuous distribution
 
@@ -395,9 +395,9 @@ ks_test
 
 # Diagnostic tests
 
-## 1. ADF Test
+## ADF Test
 
-### 1.1 ADF on full history
+### ADF on full history
 
 Test on the log price series (using the full data history) :
 
@@ -408,7 +408,7 @@ adf.test(
 )
 ```
 
-### 1.2 ADF on Balanced history
+### ADF on Balanced history
 
 Test on the log price series (425 Obs balanced ) :
 
@@ -419,7 +419,7 @@ adf.test(
 )
 ```
 
-### 1.3 ADF on Log returns  - full history
+### ADF on Log returns  - full history
 
 Test on log returns (using the full data history):
 
@@ -430,7 +430,7 @@ adf.test(
 )
 ```
 
-### 1.4 ADF on Log returns  - balanced history
+### ADF on Log returns  - balanced history
 
 Test on the log price series (425 Obs balanced ) :
 
@@ -441,9 +441,9 @@ adf.test(
 )
 ```
 
-## 2. ACF /PACF Test
+## ACF /PACF Test
 
-### 2.1 ACF on Full History 
+### ACF on Full History 
 
 ```{r}
 acf(
@@ -453,7 +453,7 @@ acf(
 )
 ```
 
-### 2.1 ACF on Balanced History 
+### ACF on Balanced History 
 
 ```{r}
 acf(
@@ -463,9 +463,9 @@ acf(
 )
 ```
 
-## 3. ACF Squared Returns
+## ACF Squared Returns
 
-### 3.1 ACF SR on Full History 
+### ACF SR on Full History 
 
 ```{r}
 acf(
@@ -475,7 +475,7 @@ acf(
 )
 ```
 
-### 3.2 ACF SR on Balanced History 
+### ACF SR on Balanced History 
 
 ```{r}
 acf(
@@ -485,9 +485,9 @@ acf(
 )
 ```
 
-## 4. Ljung Box Test
+## Ljung Box Test
 
-### 4.1 LB Returns - Full History 
+### LB Returns - Full History 
 
 Returns - Full Data :
 
@@ -499,7 +499,7 @@ Box.test(
 )
 ```
 
-### 4.2 LB Returns - Balanced History 
+### LB Returns - Balanced History 
 
 Returns - Balanced Data :
 
@@ -511,7 +511,7 @@ Box.test(
 )
 ```
 
-### 4.3 LB Sq Returns - Full History 
+### LB Sq Returns - Full History 
 
 Squared returns - Full Data :
 
@@ -523,7 +523,7 @@ Box.test(
 )
 ```
 
-### 4.4 LB Sq Returns - Balanced History 
+### LB Sq Returns - Balanced History 
 
 Squared returns - Balanced Data :
 
@@ -535,9 +535,9 @@ Box.test(
 )
 ```
 
-## 5. Arch LM test
+## Arch LM test
 
-### 5.1 ARCH LM - Full History  
+### ARCH LM - Full History  
 
 -   Full Data
 
@@ -554,7 +554,7 @@ for (L in c(5, 10, 12, 20)) {
 }
 ```
 
-### 5.2 ARCH LM - Balanced History  
+### ARCH LM - Balanced History  
 
 -   Balanced Data
 
@@ -573,7 +573,7 @@ for (L in c(5, 10, 12, 20)) {
 
 # Structural break analysis
 
-## 1. Bai Perron (unknown break test date)
+## Bai Perron (unknown break test date)
 
 These tests are reviewing/detecting shifts in unconditional mean and returns across regimes.
 
@@ -587,7 +587,7 @@ Additonal notes:
 -   One of the key BIC-selected volatility breaks occurs around November 2022, coinciding with the FTX bankruptcy. This suggests that the 2022 episode represents an important change in the volatility regime.
 -   To reduce the influence of this earlier regime change on the ETF comparison, I therefore restrict the main pre/post analysis to observations after 11 November 2022 and construct the balanced ETF sample within this post-FTX period.
 
-### 1.1 BP - Mean 
+### BP - Mean 
 
 Below model is running is running on the full unrestricted historical data
 
@@ -614,7 +614,7 @@ plot(bp_mean)
 -   Graph basically shows how adding structural breaks reduces the residual error, but the improvement is not large enough to justify the extra parameters as indicated per BIC.
 -   On the above graph there is no unrestricted mean break. But it does find one for the squared return. The most significant break is in Nov 2022. This events coincides with FTX bankruptcy. Given the significance of the event I modified my balanced data to exceed this date.
 
-### 1.2 BP - Squared Returns  
+### BP - Squared Returns  
 
 Bai–Perron on squared returns (1 break) :
 
@@ -631,7 +631,7 @@ bp_vol <- breakpoints(
 plot(bp_vol)
 
 #bp_data$Date[breakpoints(bp_mean)$breakpoints]
-bp_data$Date[breakpoints(bp_vol)$breakpoints]
+#bp_data$Date[breakpoints(bp_vol)$breakpoints]
 ```
 
 Date of the break:
@@ -640,7 +640,7 @@ Date of the break:
 bp_data$Date[breakpoints(bp_vol)$breakpoints]
 ```
 
-### 1.3 BP - Post 2022/FTX 
+### BP - Post 2022/FTX 
 
 Running on an amended timeframe to avoid the major FTX impact in 2022.
 Bai–Perron on squared returns (0 breaks) :
@@ -664,7 +664,7 @@ plot(bp_vol_postftx)
 #bp_data_post2022$Date[breakpoints(bp_vol_postftx)$breakpoints]
 ```
 
-## 2. Chow Test (known date)
+## Chow Test (known date)
 
 Chow test asks directly whether 11 January 2024, the ETF approval date, is itself a structural break.
 
@@ -674,7 +674,7 @@ etf_obs <- which(bp_data_post2022$Date == etf_date)
 
 ```
 
-### 2.1 Chow Test - Returns 
+### Chow Test - Returns 
 
 Chow test on returns:
 
@@ -690,7 +690,7 @@ chow_mean <- sctest(
 print(chow_mean)
 ```
 
-### 2.2 Chow Test - Squared Returns 
+### Chow Test - Squared Returns 
 
 Chow test on squared returns:
 
@@ -705,7 +705,7 @@ chow_var <- sctest(
 print(chow_var)
 ```
 
-## 3. CUMSUM on variance
+## CUMSUM on variance
 
 CUSUM tests whether the model parameters remain stable over time by tracking the cumulative sum of residuals and checking whether it stays within critical bounds
 
@@ -723,11 +723,11 @@ plot(cusum_var, main = "CUSUM: Squared Returns (post-FTX)")
 
 # GARCH Models 
 
-## 1. GARCH
+## GARCH
 
 Added Observations on the models after the each result
 
-### 1.1 GARCH(1,1) - Post 2022 
+### GARCH(1,1) - Post 2022 
 
 ```{r}
 garch_data_post2022 <- full_log |>
@@ -785,7 +785,7 @@ Observations:
 -   Nyblom test indicates parameter instability over the sample
 -   Sign-bias test indicates asymmetry, particularly for negative shocks
 
-### 1.2 ETF Dummy
+### ETF Dummy
 
 ```{r}
 etf_xreg <- matrix(
@@ -820,7 +820,7 @@ Observations:
 -   ETF variance dummy is positive but not statistically significant
 -   Model fit changes very little versus the baseline GARCH
 
-### 1.3 Pre/Post Garch
+### Pre/Post Garch
 
 ```{r}
 garch_pre <- garch_data_post2022 |>
@@ -870,9 +870,9 @@ Observations:
 -   Pre-ETF: strong persistence and significant ARCH respons with Nyblom and sign-bias tests indicate instability/asymmetry.
 -   Post-ETF: residual diagnostics, stability tests and sign-bias tests are substantially cleaner, suggesting the GARCH specification fits the post period better.
 
-## 2. GJR-GARCH
+## GJR-GARCH
 
-### 2.1 GJR-GARCH (1,1)
+### GJR-GARCH (1,1)
 
 ```{r}
 gjr_spec <- ugarchspec(
@@ -905,7 +905,7 @@ Observations:
 -   Squared residuals still show some remaining dependence
 -   GJR-GARCH provides a slightly better fit but the evidence for a strong leverage/asymmetry effect is limited.
 
-### 2.2 ETF Dummy
+### ETF Dummy
 
 ```{r}
 gjr_etf_spec <- ugarchspec(
@@ -932,7 +932,7 @@ gjr_etf_fit
 
 Obesrevations: - ETF variance dummy remains insignificant - The asymmetry coefficient γ is also insignificant - Volatility persistence remains high - ETF dummy provides almost no improvement in fit
 
-### 2.3 Pre/Post Garch
+### Pre/Post Garch
 
 ```{r}
 gjr_spec <- ugarchspec(
@@ -965,7 +965,7 @@ gjr_post_fit
 
 Observations: - Estimated volatility persistence falls materially -\> 0.995 pre-ETF vs. 0.914 post-ETF - The asymmetry coefficient γ is insignificant in both periods - Pre-ETF: GJR substantially improves parameter stability relative to the symmetric GARCH - Post-ETF: No residual autocorrelation, no significant sign bias, stable parameters, and strong goodness-of-fit - Post-ETF volatility process appears less persistent and more stable
 
-### 2.4 LR Test
+### LR Test
 
 Pre and post have the same number of rows, so they are reunited for the LR test.
 
